@@ -4,7 +4,23 @@ import { useEffect, useState, useRef } from "react"
 import { supabase } from "@/lib/supabase"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Button } from "@/components/ui/button"
-import { FileText, MessageSquare, Send, Loader2, Plus, Search, Trash2, MoreVertical, FolderOpen, User, Bot } from 'lucide-react'
+import { 
+  FileText, 
+  MessageSquare, 
+  Send, 
+  Loader2, 
+  Plus, 
+  Search, 
+  Trash2, 
+  MoreVertical, 
+  FolderOpen, 
+  User, 
+  Bot,
+  ChevronLeft,
+  ChevronRight,
+  PanelLeftClose,
+  PanelRightClose
+} from 'lucide-react'
 import { Textarea } from "@/components/ui/textarea"
 import { useToast } from "@/hooks/use-toast"
 import { motion, AnimatePresence } from "framer-motion"
@@ -47,6 +63,8 @@ export default function Dashboard() {
   const [chatSessions, setChatSessions] = useState<ChatSession[]>([])
   const [selectedChat, setSelectedChat] = useState<ChatSession | null>(null)
   const [loadingChats, setLoadingChats] = useState(true)
+  const [leftSidebarOpen, setLeftSidebarOpen] = useState(true)
+  const [rightSidebarOpen, setRightSidebarOpen] = useState(true)
   const chatContainerRef = useRef<HTMLDivElement>(null)
   const { toast } = useToast()
 
@@ -292,8 +310,31 @@ export default function Dashboard() {
 
   return (
     <div className="flex h-screen bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden">
+      {/* Left Sidebar Toggle */}
+      <div 
+        className={`absolute left-0 top-1/2 -translate-y-1/2 z-10 ${
+          leftSidebarOpen ? 'translate-x-80' : 'translate-x-0'
+        } transition-transform duration-300`}
+      >
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={() => setLeftSidebarOpen(!leftSidebarOpen)}
+          className="h-12 w-8 rounded-r-lg bg-white border border-l-0 border-gray-200 shadow-sm hover:bg-gray-50"
+        >
+          {leftSidebarOpen ? <PanelLeftClose className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
+        </Button>
+      </div>
+
       {/* Left Sidebar - Chat History */}
-      <div className="w-80 bg-white border-r border-gray-200 flex flex-col shadow-lg">
+      <motion.div 
+        className="w-80 bg-white border-r border-gray-200 flex flex-col shadow-lg"
+        animate={{ 
+          width: leftSidebarOpen ? 'auto' : 0,
+          opacity: leftSidebarOpen ? 1 : 0
+        }}
+        transition={{ duration: 0.3 }}
+      >
         <div className="p-6 border-b border-gray-200 bg-gradient-to-r from-gray-50 to-white">
           <h2 className="text-xl font-semibold text-gray-800 mb-4">Chat History</h2>
           <Button 
@@ -395,7 +436,7 @@ export default function Dashboard() {
             )}
           </motion.div>
         </ScrollArea>
-      </div>
+      </motion.div>
 
       {/* Main Chat Area */}
       <div className="flex-1 flex flex-col bg-white">
@@ -518,8 +559,31 @@ export default function Dashboard() {
         </div>
       </div>
 
+      {/* Right Sidebar Toggle */}
+      <div 
+        className={`absolute right-0 top-1/2 -translate-y-1/2 z-10 ${
+          rightSidebarOpen ? '-translate-x-80' : 'translate-x-0'
+        } transition-transform duration-300`}
+      >
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={() => setRightSidebarOpen(!rightSidebarOpen)}
+          className="h-12 w-8 rounded-l-lg bg-white border border-r-0 border-gray-200 shadow-sm hover:bg-gray-50"
+        >
+          {rightSidebarOpen ? <PanelRightClose className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
+        </Button>
+      </div>
+
       {/* Right Sidebar - File Explorer */}
-      <div className="w-80 bg-white border-l border-gray-200 flex flex-col shadow-lg">
+      <motion.div 
+        className="w-80 bg-white border-l border-gray-200 flex flex-col shadow-lg"
+        animate={{ 
+          width: rightSidebarOpen ? 'auto' : 0,
+          opacity: rightSidebarOpen ? 1 : 0
+        }}
+        transition={{ duration: 0.3 }}
+      >
         <div className="p-6 border-b border-gray-200 bg-gradient-to-r from-white to-gray-50">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-xl font-semibold text-gray-800">Files</h2>
@@ -584,7 +648,7 @@ export default function Dashboard() {
             )}
           </motion.div>
         </ScrollArea>
-      </div>
+      </motion.div>
     </div>
   )
 }
