@@ -312,7 +312,7 @@ export default function Dashboard() {
     <div className="flex h-screen bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden">
       {/* Left Sidebar Toggle */}
       <div 
-        className={`absolute left-0 top-1/2 -translate-y-1/2 z-10 ${
+        className={`absolute left-0 top-7 z-10 ${
           leftSidebarOpen ? 'translate-x-80' : 'translate-x-0'
         } transition-transform duration-300`}
       >
@@ -320,7 +320,7 @@ export default function Dashboard() {
           variant="ghost"
           size="icon"
           onClick={() => setLeftSidebarOpen(!leftSidebarOpen)}
-          className="h-12 w-8 rounded-r-lg bg-white border border-l-0 border-gray-200 shadow-sm hover:bg-gray-50"
+          className="h-8 w-8 rounded-r-lg bg-white border border-l-0 border-gray-200 shadow-sm hover:bg-gray-50"
         >
           {leftSidebarOpen ? <PanelLeftClose className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
         </Button>
@@ -561,7 +561,7 @@ export default function Dashboard() {
 
       {/* Right Sidebar Toggle */}
       <div 
-        className={`absolute right-0 top-1/2 -translate-y-1/2 z-10 ${
+        className={`absolute right-0 top-7 z-10 ${
           rightSidebarOpen ? '-translate-x-80' : 'translate-x-0'
         } transition-transform duration-300`}
       >
@@ -569,7 +569,7 @@ export default function Dashboard() {
           variant="ghost"
           size="icon"
           onClick={() => setRightSidebarOpen(!rightSidebarOpen)}
-          className="h-12 w-8 rounded-l-lg bg-white border border-r-0 border-gray-200 shadow-sm hover:bg-gray-50"
+          className="h-8 w-8 rounded-l-lg bg-white border border-r-0 border-gray-200 shadow-sm hover:bg-gray-50"
         >
           {rightSidebarOpen ? <PanelRightClose className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
         </Button>
