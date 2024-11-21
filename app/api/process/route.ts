@@ -49,7 +49,8 @@ export async function POST(request: Request) {
     });
 
     // Parse Claude's response into structured format
-    const responseText = message.content[0].text;
+    const responseText =
+      message.content[0].type === "text" ? message.content[0].text : "";
 
     const analysis = {
       summary: responseText,
